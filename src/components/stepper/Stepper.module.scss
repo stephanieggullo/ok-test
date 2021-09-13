@@ -1,0 +1,43 @@
+@import '../../styles/base.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 105px;
+  background-color: $secondary-light-color;
+  box-shadow: inset 0px 0px 20px 0px $shadow-light-color;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-extra-large;
+  height: 35px;
+  width: 35px;
+  background-color: $secondary-medium-color;
+  border-radius: 100%;
+  font-weight: bolder;
+  color: $secondary-light-color;
+
+  &-checked {
+    background-color: $primary-color;
+    background-image: url('../../assets/img/check.svg');
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &-active {
+    height: 47px;
+    width: 47px;
+    background-color: $secondary-color;
+  }
+}
+
+.separator {
+  height: 4px;
+  width: 42px;
+  background-color: $secondary-medium-color;
+}
