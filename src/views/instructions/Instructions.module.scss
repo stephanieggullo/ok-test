@@ -1,0 +1,35 @@
+@import '../../styles/base.scss';
+
+.instructions {
+  &-container {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 4rem;
+  }
+
+  &-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 360px;
+    text-align: center;
+    font-size: $font-size-large;
+  }
+
+  &-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.box-info {
+  margin-top: 2.25rem;
+
+  p {
+    font-size: $font-size-large;
+  }
+}
