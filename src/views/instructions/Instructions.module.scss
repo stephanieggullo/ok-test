@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     width: 360px;
     text-align: center;
     font-size: $font-size-large;
@@ -25,10 +25,20 @@
   }
 }
 
-.box-info {
-  margin-top: 2.25rem;
+.box {
+  &-info {
+    margin-top: 2.25rem;
+    p {
+      font-size: $font-size-large;
+    }
+  }
 
-  p {
+  &-terms {
+    margin-top: 4rem;
     font-size: $font-size-large;
   }
+}
+
+.label {
+  padding-left: 0.5rem;
 }

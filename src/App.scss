@@ -1,7 +1,7 @@
 @import 'styles/base';
 
-main {
-  padding: 1rem 6rem;
+section {
+  padding: 2rem 6rem 4rem;
   color: $secondary-color;
 }
 
@@ -15,4 +15,14 @@ main {
     border-bottom: 4px solid $highlighted-color;
     width: 40px;
   }
+}
+
+.form-fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.required {
+  color: $secondary-medium-color;
 }

@@ -4,7 +4,6 @@ import './App.scss';
 import Stepper from './components/stepper/Stepper';
 import Instructions from './views/instructions/Instructions';
 import Form from './views/form/Form';
-import ActionsBar from './components/actions-bar/ActionsBar';
 
 const App = () => {
   return (
@@ -23,7 +22,6 @@ const App = () => {
           </Route>
         </Switch>
       </main>
-      <ActionsBar />
     </Fragment>
   );
 };

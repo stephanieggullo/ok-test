@@ -1,0 +1,58 @@
+@import '../../styles/base.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem 7rem;
+  height: 150px;
+  border-top: 3px solid $secondary-extra-light-color;
+}
+
+.btn,
+a {
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+  height: 60px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cancel-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary-medium-color;
+  }
+}
+
+.continue-btn {
+  width: 170px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  color: $white;
+  background-color: $secondary-color;
+  transition: background-color 0.2s;
+
+  &_icon {
+    padding-left: 0.7rem;
+    height: 15px;
+    width: 12px;
+  }
+
+  &:hover {
+    background-color: $secondary-medium-color;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    background-color: $secondary-light-color;
+  }
+}
