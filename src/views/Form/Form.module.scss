@@ -1,0 +1,53 @@
+@import '../../styles/base.scss';
+
+.instructions {
+  margin: 3rem 0rem 1.5rem;
+  font-size: $font-size-large;
+}
+
+.form {
+  &-group {
+    display: flex;
+
+    &_textarea {
+      flex-direction: column;
+    }
+  }
+
+  &-label {
+    font-size: $font-size-large;
+    font-weight: bold;
+    color: $secondary-color;
+  }
+
+  &-input {
+    &_box {
+      position: relative;
+    }
+
+    &_icon {
+      position: absolute;
+      width: 36px;
+      margin-left: -7rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+
+    &_input {
+      padding: 1.2rem 1.2rem;
+      margin: 0.625rem 3.125rem 0.625rem 0rem;
+      font-size: $font-size-large;
+      border: 2px solid $secondary-light-color;
+      color: $secondary-color;
+
+      outline-color: $secondary-medium-color;
+      &-pwd {
+        width: 320px;
+      }
+
+      &::placeholder {
+        color: $shadow-light-color;
+      }
+    }
+  }
+}
