@@ -1,0 +1,10 @@
+.feedback {
+  &-container {
+    display: flex;
+    padding-left: 20px;
+  }
+  &-icon {
+    width: 65px;
+    margin-right: 30px;
+  }
+}

@@ -1,11 +1,15 @@
 @import 'styles/base';
 
+body {
+  background-color: $secondary-lightest-color;
+}
+
 main {
   padding: 1.875rem 1.875rem 5.625rem;
   background: linear-gradient(
     180deg,
     $secondary-lighter-color 100px,
-    $secondary-lightest-color 100px
+    transparent 100px
   );
 }
 
