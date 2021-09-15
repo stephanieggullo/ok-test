@@ -1,28 +1,23 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
-import Stepper from './components/stepper/Stepper';
-import Instructions from './views/instructions/Instructions';
-import Form from './views/form/Form';
+import Wizard from './components/wizard/Wizard';
 
 const App = () => {
   return (
-    <Fragment>
-      <Stepper />
-      <main>
-        <Switch>
-          <Route path='/' exact>
-            <Redirect to='/instructions' />
-          </Route>
-          <Route path='/instructions'>
-            <Instructions />
-          </Route>
-          <Route path='/form' exact>
-            <Form />
-          </Route>
-        </Switch>
-      </main>
-    </Fragment>
+    <main>
+      <Switch>
+        <Route path='/' exact>
+          <Redirect to='/wizard' />
+        </Route>
+        <Route path='/wizard'>
+          <Wizard />
+        </Route>
+        <Route path='*' exact>
+          <Redirect to='/wizard' />
+        </Route>
+      </Switch>
+    </main>
   );
 };
 

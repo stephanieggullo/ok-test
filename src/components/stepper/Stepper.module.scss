@@ -20,6 +20,7 @@
   border-radius: 100%;
   font-weight: bolder;
   color: $secondary-light-color;
+  box-shadow: 0px 0px 3px 0 rgba(0, 0, 0, 0.253);
 
   &-checked {
     background-color: $primary-color;
@@ -33,6 +34,8 @@
     height: 47px;
     width: 47px;
     background-color: $secondary-color;
+    box-shadow: 0px 0px 15px 0 rgba(0, 0, 0, 0.384),
+      0 0px 4px 0 rgba(0, 0, 0, 0.425);
   }
 }
 
@@ -40,4 +43,5 @@
   height: 4px;
   width: 42px;
   background-color: $secondary-medium-color;
+  box-shadow: 0px 0px 3px 0 rgba(0, 0, 0, 0.253);
 }

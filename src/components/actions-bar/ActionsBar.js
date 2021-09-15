@@ -1,18 +1,16 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './ActionsBar.module.scss';
 import arrow from '../../assets/img/arrow.svg';
 
 const ActionsBar = (props) => {
-  const history = useHistory();
-
   const handleNextBtn = () => {
-    history.push(`${props.navigateTo}`);
+    props.onClickContinue();
   };
 
   return (
     <div className={styles.container}>
-      <Link to='/instructions'>
+      <Link to='/wizard'>
         <button className={`${styles.btn} ${styles['cancel-btn']}`}>
           Cancelar
         </button>

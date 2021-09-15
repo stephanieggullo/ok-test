@@ -1,8 +1,23 @@
 @import 'styles/base';
 
+main {
+  padding: 1.875rem 1.875rem 5.625rem;
+  background: linear-gradient(
+    180deg,
+    $secondary-lighter-color 100px,
+    $secondary-lightest-color 100px
+  );
+}
+
+.box-section {
+  box-shadow: 0px 0px 15px 0 rgba(121, 144, 153, 0.295),
+    0 0px 5px 0 rgba(121, 144, 153, 0.295);
+}
+
 section {
   padding: 2rem 6rem 4rem;
   color: $secondary-color;
+  background-color: $white;
 }
 
 .title {

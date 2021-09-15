@@ -3,14 +3,20 @@ import styles from './Instructions.module.scss';
 import group from '../../assets/img/group.svg';
 import group3 from '../../assets/img/group-3.svg';
 import ActionsBar from '../../components/actions-bar/ActionsBar';
+import { useHistory } from 'react-router-dom';
 
 const Instructions = () => {
   const [disabled, setDisabled] = useState(true);
   const privacityCheckRef = useRef();
+  const history = useHistory();
 
   const handleStepValidity = () => {
     const validForm = privacityCheckRef.current.checked;
     setDisabled(!validForm);
+  };
+
+  const onClickContinue = () => {
+    history.push('/wizard/form');
   };
 
   return (
@@ -58,7 +64,6 @@ const Instructions = () => {
           <span>Para continuar debe aceptar los terminos y condiciones:</span>
           <div>
             <input
-              required
               ref={privacityCheckRef}
               type='checkbox'
               id='terms'
@@ -71,7 +76,7 @@ const Instructions = () => {
           </div>
         </div>
       </section>
-      <ActionsBar disabled={disabled} navigateTo='/form' />
+      <ActionsBar disabled={disabled} onClickContinue={onClickContinue} />
     </Fragment>
   );
 };
