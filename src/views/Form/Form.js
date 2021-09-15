@@ -1,12 +1,18 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { wizardActions } from '../../store';
 import styles from './Form.module.scss';
 import eyeIcon from '../../assets/img/eye-icon-private.svg';
 import eyeIconVisibility from '../../assets/img/eye-icon.svg';
 import ActionsBar from '../../components/actions-bar/ActionsBar';
 import { submitForm } from '../../services/api';
-import { useHistory } from 'react-router-dom';
 
 const Form = () => {
+  const store = useSelector((state) => state.step);
+  const step = store && store.step;
+  const dispatch = useDispatch();
   const history = useHistory();
   const [passwordVisibility, setPasswordVisibility] = useState();
   const [disabled, setDisabled] = useState(true);
@@ -15,6 +21,12 @@ const Form = () => {
   const [loading, setLoading] = useState();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+
+  useEffect(() => {
+    if (!step) {
+      history.push('/wizard');
+    }
+  }, [step, history]);
 
   const handlePasswordVisibility = () => {
     setPasswordVisibility((prevValue) => !prevValue);
@@ -58,14 +70,22 @@ const Form = () => {
     setErrorPasswordConfirm(null);
   };
 
+  const onClickCancel = () => {
+    history.push('/wizard');
+  };
+
   const onClickContinue = async () => {
     setLoading(true);
     try {
-      await submitForm();
-      // save OK
+      await submitForm('pruebaKO123');
+      goNextStep('success');
     } catch {
-      // save KO
+      goNextStep('error');
     }
+  };
+
+  const goNextStep = (res) => {
+    dispatch(wizardActions.setFeedback({ type: 'feedback', feedback: res }));
     history.push('/feedback');
   };
 
@@ -171,8 +191,9 @@ const Form = () => {
       </section>
       <ActionsBar
         disabled={disabled}
-        onClickContinue={onClickContinue}
         loading={loading}
+        onClickContinue={onClickContinue}
+        onClickCancel={onClickCancel}
       />
     </Fragment>
   );

@@ -1,14 +1,21 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { wizardActions } from '../../store';
 import styles from './Instructions.module.scss';
 import group from '../../assets/img/group.svg';
 import group3 from '../../assets/img/group-3.svg';
 import ActionsBar from '../../components/actions-bar/ActionsBar';
-import { useHistory } from 'react-router-dom';
 
 const Instructions = () => {
+  const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const privacityCheckRef = useRef();
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(wizardActions.setStep({ type: 'step', step: null }));
+  }, [dispatch]);
 
   const handleStepValidity = () => {
     const validForm = privacityCheckRef.current.checked;
@@ -16,7 +23,12 @@ const Instructions = () => {
   };
 
   const onClickContinue = () => {
+    dispatch(wizardActions.setStep({ type: 'step', step: 2 }));
     history.push('/wizard/form');
+  };
+
+  const onClickCancel = () => {
+    history.push('/wizard');
   };
 
   return (
@@ -76,7 +88,11 @@ const Instructions = () => {
           </div>
         </div>
       </section>
-      <ActionsBar disabled={disabled} onClickContinue={onClickContinue} />
+      <ActionsBar
+        disabled={disabled}
+        onClickContinue={onClickContinue}
+        onClickCancel={onClickCancel}
+      />
     </Fragment>
   );
 };

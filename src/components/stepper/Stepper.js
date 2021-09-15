@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import styles from './Stepper.module.scss';
+import { useSelector } from 'react-redux';
 
 const Stepper = () => {
-  const location = useLocation();
-  const [firstStep, setFirstStep] = useState(true);
+  const store = useSelector((state) => state.step);
+  const step = store && store.step;
 
-  useEffect(() => {
-    const step2 = location.pathname.includes('form');
-    setFirstStep(!step2);
-  }, [location]);
   return (
     <div className={styles.container}>
       <div
         className={`${styles.item} ${
-          styles[firstStep ? 'item-active' : 'item-checked']
+          styles[!step ? 'item-active' : 'item-checked']
         }`}
       >
-        {firstStep ? 1 : ''}
+        {!step ? 1 : ''}
       </div>
       <div className={styles.separator}></div>
-      <div
-        className={`${styles.item} ${styles[firstStep ? '' : 'item-active']}`}
-      >
+      <div className={`${styles.item} ${styles[!step ? '' : 'item-active']}`}>
         2
       </div>
       <div className={styles.separator}></div>

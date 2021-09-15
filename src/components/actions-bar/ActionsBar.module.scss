@@ -3,11 +3,17 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0rem 7rem;
   height: 150px;
   border-top: 3px solid $secondary-lightest-color;
   background-color: $white;
+
+  &-end {
+    justify-content: end;
+  }
+  &-center {
+    justify-content: space-between;
+  }
 }
 
 .btn,
@@ -27,7 +33,7 @@ a {
   cursor: pointer;
 
   &:hover {
-    color: $secondary-medium-color;
+    color: $highlighted-color;
   }
 }
 
@@ -38,14 +44,37 @@ a {
   justify-content: center;
   align-items: center;
   border-radius: 3px;
-  color: $white;
-  background-color: $secondary-color;
-  transition: background-color 0.2s;
+
+  &-primary {
+    color: $white;
+    background-color: $secondary-color;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: $highlighted-color;
+    }
+  }
+
+  &-secondary {
+    width: auto;
+    color: $primary-color;
+    background: none;
+    border: none;
+  }
 
   &_icon {
-    padding-left: 0.7rem;
-    height: 15px;
-    width: 12px;
+    border: solid $white;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    margin-left: 0.2rem;
+    height: 3.5px;
+    width: 3.5px;
+
+    &-primary {
+      border-color: $primary-color;
+    }
   }
 
   &_loading {
@@ -57,10 +86,6 @@ a {
     height: 15px;
     width: 12px;
     animation: spin 1.2s ease infinite;
-  }
-
-  &:hover {
-    background-color: $secondary-medium-color;
   }
 
   &:disabled {
