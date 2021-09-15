@@ -7,8 +7,8 @@ const Stepper = () => {
   const [firstStep, setFirstStep] = useState(true);
 
   useEffect(() => {
-    const step = location.pathname.includes('instructions');
-    setFirstStep(step);
+    const step2 = location.pathname.includes('form');
+    setFirstStep(!step2);
   }, [location]);
   return (
     <div className={styles.container}>

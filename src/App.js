@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import Wizard from './components/wizard/Wizard';
+import Feedback from './views/feedback/Feedback';
 
 const App = () => {
   return (
@@ -12,6 +13,9 @@ const App = () => {
         </Route>
         <Route path='/wizard'>
           <Wizard />
+        </Route>
+        <Route path='/feedback'>
+          <Feedback />
         </Route>
         <Route path='*' exact>
           <Redirect to='/wizard' />

@@ -1,14 +1,72 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import styles from './Form.module.scss';
 import eyeIcon from '../../assets/img/eye-icon-private.svg';
 import eyeIconVisibility from '../../assets/img/eye-icon.svg';
 import ActionsBar from '../../components/actions-bar/ActionsBar';
+import { submitForm } from '../../services/api';
+import { useHistory } from 'react-router-dom';
 
 const Form = () => {
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const history = useHistory();
+  const [passwordVisibility, setPasswordVisibility] = useState();
+  const [disabled, setDisabled] = useState(true);
+  const [errorPassword, setErrorPassword] = useState();
+  const [errorPasswordConfirm, setErrorPasswordConfirm] = useState();
+  const [loading, setLoading] = useState();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
 
   const handlePasswordVisibility = () => {
     setPasswordVisibility((prevValue) => !prevValue);
+  };
+
+  const handlePasswordValidity = () => {
+    const value = passwordRef.current.value;
+    if (!!value) {
+      setErrors(value);
+    } else {
+      clearErrors();
+      setDisabled(true);
+    }
+  };
+
+  const setErrors = (value) => {
+    const valueLength = passwordRef.current.value.trim().length;
+    const upperCase = /[A-Z]/.test(value);
+    const number = /[0-9]/.test(value);
+    const confirmPasswordValue = confirmPasswordRef.current.value;
+    if (valueLength < 6 || valueLength > 24) {
+      setErrorPassword('Debe tener entre 6 y 24 caracteres');
+    } else if (!upperCase) {
+      setErrorPassword('Debe contener al menos una mayúscula');
+    } else if (!number) {
+      setErrorPassword('Debe contener al menos un número');
+    } else if (
+      !!confirmPasswordValue &&
+      passwordRef.current.value !== confirmPasswordValue
+    ) {
+      setErrorPasswordConfirm('No coincide con la contraseña');
+      setErrorPassword(null);
+    } else {
+      setDisabled(false);
+      clearErrors();
+    }
+  };
+
+  const clearErrors = () => {
+    setErrorPassword(null);
+    setErrorPasswordConfirm(null);
+  };
+
+  const onClickContinue = async () => {
+    setLoading(true);
+    try {
+      await submitForm();
+      // save OK
+    } catch {
+      // save KO
+    }
+    history.push('/feedback');
   };
 
   return (
@@ -30,11 +88,21 @@ const Form = () => {
                 </label>
                 <div className={styles['form-input_box']}>
                   <input
+                    ref={passwordRef}
                     type={passwordVisibility ? 'text' : 'password'}
+                    autoComplete='off'
                     id='password'
                     placeholder='Crea tu contraseña'
-                    className={`${styles['form-input_input']} ${styles['form-input_input-pwd']}`}
+                    className={`${styles['form-input_input']} ${
+                      styles['form-input_input-pwd']
+                    } ${errorPassword ? styles['form-input_error'] : ''}`}
+                    onBlur={handlePasswordValidity}
                   />
+                  {errorPassword && (
+                    <span className={styles['form-group_error']}>
+                      {errorPassword}
+                    </span>
+                  )}
                   <img
                     src={passwordVisibility ? eyeIconVisibility : eyeIcon}
                     alt='Password'
@@ -52,10 +120,17 @@ const Form = () => {
                 </label>
                 <div className={styles['form-input_box']}>
                   <input
+                    ref={confirmPasswordRef}
                     type={passwordVisibility ? 'text' : 'password'}
+                    autoComplete='off'
                     id='confirm-password'
                     placeholder='Repite tu contraseña'
-                    className={`${styles['form-input_input']} ${styles['form-input_input-pwd']}`}
+                    className={`${styles['form-input_input']} ${
+                      styles['form-input_input-pwd']
+                    } ${
+                      errorPasswordConfirm ? styles['form-input_error'] : ''
+                    }`}
+                    onBlur={handlePasswordValidity}
                   />
                   <img
                     src={passwordVisibility ? eyeIconVisibility : eyeIcon}
@@ -63,10 +138,15 @@ const Form = () => {
                     className={styles['form-input_icon']}
                     onClick={handlePasswordVisibility}
                   />
+                  {errorPasswordConfirm && (
+                    <span className={styles['form-group_error']}>
+                      {errorPasswordConfirm}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
-            <div className={styles['instructions-container']}>
+            <div className={styles['instructions']}>
               <p>
                 También puedes crear una pista que te ayude a recordar tu
                 contraseña maestra.
@@ -89,7 +169,11 @@ const Form = () => {
           </fieldset>
         </form>
       </section>
-      <ActionsBar />
+      <ActionsBar
+        disabled={disabled}
+        onClickContinue={onClickContinue}
+        loading={loading}
+      />
     </Fragment>
   );
 };

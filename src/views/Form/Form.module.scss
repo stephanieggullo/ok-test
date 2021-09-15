@@ -12,6 +12,13 @@
     &_textarea {
       flex-direction: column;
     }
+
+    &_error {
+      color: $error-color;
+      position: absolute;
+      left: 0px;
+      top: 80px;
+    }
   }
 
   &-label {
@@ -37,10 +44,12 @@
       padding: 1.2rem 1.2rem;
       margin: 0.625rem 3.125rem 0.625rem 0rem;
       font-size: $font-size-large;
-      border: 2px solid $secondary-light-color;
       color: $secondary-color;
-
+      border: 2px solid $secondary-light-color;
+      border-radius: 3px;
       outline-color: $secondary-medium-color;
+      transition: border-color 0.3s;
+
       &-pwd {
         width: 320px;
       }
@@ -48,6 +57,12 @@
       &::placeholder {
         color: $shadow-light-color;
       }
+    }
+
+    &_error {
+      outline-color: $error-color;
+      border: 2px solid rgba(187, 0, 0, 0.644);
+      transition: border-color 0.3s;
     }
   }
 }

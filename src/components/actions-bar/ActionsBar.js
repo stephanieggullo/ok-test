@@ -1,27 +1,46 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment } from 'react';
 import styles from './ActionsBar.module.scss';
 import arrow from '../../assets/img/arrow.svg';
+import { useHistory } from 'react-router-dom';
 
 const ActionsBar = (props) => {
+  const history = useHistory();
+
   const handleNextBtn = () => {
     props.onClickContinue();
   };
 
+  const handleCancelBtn = () => {
+    history.push('/wizard');
+  };
+
   return (
     <div className={styles.container}>
-      <Link to='/wizard'>
-        <button className={`${styles.btn} ${styles['cancel-btn']}`}>
-          Cancelar
-        </button>
-      </Link>
       <button
-        disabled={props.disabled}
+        disabled={props.loading}
+        className={`${styles.btn} ${styles['cancel-btn']}`}
+        onClick={handleCancelBtn}
+      >
+        Cancelar
+      </button>
+      <button
+        disabled={props.disabled || props.loading}
         className={`${styles.btn} ${styles['continue-btn']}`}
         onClick={handleNextBtn}
       >
-        Siguiente
-        <img src={arrow} alt='arrow' className={styles['continue-btn_icon']} />
+        {!props.loading && (
+          <Fragment>
+            Siguiente
+            <img
+              src={arrow}
+              alt='arrow'
+              className={styles['continue-btn_icon']}
+            />
+          </Fragment>
+        )}
+        {props.loading && (
+          <div className={styles['continue-btn_loading']}></div>
+        )}
       </button>
     </div>
   );
