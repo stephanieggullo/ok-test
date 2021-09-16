@@ -35,8 +35,8 @@
     &_icon {
       position: absolute;
       width: 36px;
-      margin-left: -7rem;
-      margin-top: 1.5rem;
+      left: 19rem;
+      top: 1.5rem;
       cursor: pointer;
     }
 
@@ -59,10 +59,29 @@
       }
     }
 
+    &_meter-box {
+      top: 70px;
+      position: absolute;
+      width: 358px;
+      border-radius: 2px;
+    }
+
+    &_meter-content {
+      padding: 0.156rem;
+      border-radius: 2px;
+    }
+
     &_error {
       outline-color: $error-color;
       border: 2px solid rgba(187, 0, 0, 0.644);
       transition: border-color 0.3s;
+    }
+
+    &_counter {
+      text-align: end;
+      margin-right: 3.125rem;
+      color: $secondary-light-color;
+      font-weight: bold;
     }
   }
 }

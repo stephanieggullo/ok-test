@@ -23,7 +23,9 @@ const Feedback = () => {
     }
   }, [feedback, history]);
 
-  const onClickContinue = () => {};
+  const onClickContinue = () => {
+    history.push('/wizard');
+  };
 
   return (
     <Fragment>

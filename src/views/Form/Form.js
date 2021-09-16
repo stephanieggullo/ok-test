@@ -14,13 +14,15 @@ const Form = () => {
   const step = store && store.step;
   const dispatch = useDispatch();
   const history = useHistory();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
   const [passwordVisibility, setPasswordVisibility] = useState();
   const [disabled, setDisabled] = useState(true);
   const [errorPassword, setErrorPassword] = useState();
   const [errorPasswordConfirm, setErrorPasswordConfirm] = useState();
   const [loading, setLoading] = useState();
-  const passwordRef = useRef();
-  const confirmPasswordRef = useRef();
+  const [progressBarStyles, setProgressBarStyles] = useState({});
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     if (!step) {
@@ -77,7 +79,7 @@ const Form = () => {
   const onClickContinue = async () => {
     setLoading(true);
     try {
-      await submitForm('pruebaKO123');
+      await submitForm();
       goNextStep('success');
     } catch {
       goNextStep('error');
@@ -87,6 +89,30 @@ const Form = () => {
   const goNextStep = (res) => {
     dispatch(wizardActions.setFeedback({ type: 'feedback', feedback: res }));
     history.push('/feedback');
+  };
+
+  const passworSecurity = () => {
+    const value = passwordRef.current.value;
+    const strong = new RegExp(
+      '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
+    );
+    const medium = new RegExp('((?=.*[A-Z])(?=.*[0-9])(?=.{6,}))');
+    if (strong.test(value)) {
+      setProgressBarStyles({ width: '100%', backgroundColor: '#fc844c' });
+      clearErrors();
+    } else if (medium.test(value)) {
+      setProgressBarStyles({ width: '60%', backgroundColor: '#fc844c' });
+      clearErrors();
+    } else if (!!value) {
+      setProgressBarStyles({ width: '30%', backgroundColor: '#fc844c' });
+    } else {
+      setProgressBarStyles({ display: 'none' });
+    }
+  };
+
+  const handleCounter = (event) => {
+    const value = event.target.value.length;
+    setCounter(value);
   };
 
   return (
@@ -117,7 +143,14 @@ const Form = () => {
                       styles['form-input_input-pwd']
                     } ${errorPassword ? styles['form-input_error'] : ''}`}
                     onBlur={handlePasswordValidity}
+                    onChange={passworSecurity}
                   />
+                  <div className={styles['form-input_meter-box']}>
+                    <div
+                      className={styles['form-input_meter-content']}
+                      style={progressBarStyles}
+                    ></div>
+                  </div>
                   {errorPassword && (
                     <span className={styles['form-group_error']}>
                       {errorPassword}
@@ -184,7 +217,11 @@ const Form = () => {
                 placeholder='Introduce tu pista'
                 className={styles['form-input_input']}
                 maxLength='255'
+                onChange={handleCounter}
               />
+              <span className={styles['form-input_counter']}>
+                {counter}/255
+              </span>
             </div>
           </fieldset>
         </form>
