@@ -44,21 +44,25 @@ const Form = () => {
     }
   };
 
+  const matchPassword = () => {
+    const confirmPasswordValue = confirmPasswordRef.current.value;
+    return (
+      !!confirmPasswordValue &&
+      passwordRef.current.value === confirmPasswordValue
+    );
+  };
+
   const setErrors = (value) => {
     const valueLength = passwordRef.current.value.trim().length;
     const upperCase = /[A-Z]/.test(value);
     const number = /[0-9]/.test(value);
-    const confirmPasswordValue = confirmPasswordRef.current.value;
     if (valueLength < 6 || valueLength > 24) {
       setErrorPassword('Debe tener entre 6 y 24 caracteres');
     } else if (!upperCase) {
       setErrorPassword('Debe contener al menos una mayúscula');
     } else if (!number) {
       setErrorPassword('Debe contener al menos un número');
-    } else if (
-      !!confirmPasswordValue &&
-      passwordRef.current.value !== confirmPasswordValue
-    ) {
+    } else if (!matchPassword()) {
       setErrorPasswordConfirm('No coincide con la contraseña');
       setErrorPassword(null);
     } else {
@@ -68,8 +72,10 @@ const Form = () => {
   };
 
   const clearErrors = () => {
-    setErrorPassword(null);
-    setErrorPasswordConfirm(null);
+    if (matchPassword()) {
+      setErrorPassword(null);
+      setErrorPasswordConfirm(null);
+    }
   };
 
   const onClickCancel = () => {
