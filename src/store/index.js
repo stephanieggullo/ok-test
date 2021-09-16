@@ -19,4 +19,6 @@ const wizardSlice = createSlice({
 const store = configureStore({ reducer: wizardSlice.reducer });
 
 export const wizardActions = wizardSlice.actions;
+export const wizardReducer = wizardSlice.reducer;
+
 export default store;
