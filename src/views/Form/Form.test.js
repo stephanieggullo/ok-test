@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Router } from 'react-router-dom';
 import { wizardReducer } from '../../store';
 import Form from './Form';
+import i18n from '../../locale/i18n';
 
 const renderComponent = () => {
   const store = createStore(wizardReducer, { step: { step: 2 } });
@@ -27,13 +28,11 @@ describe('Password management form', () => {
   });
 
   test('Should render three form inputs', () => {
-    const passwordInput = screen.getByLabelText('Crea tu contraseña Maestra');
+    const passwordInput = screen.getByLabelText(i18n.t('create_password'));
     const confirmPasswordInput = screen.getByLabelText(
-      'Repite tu contraseña Maestra'
+      i18n.t('repeat_password')
     );
-    const trackInput = screen.getByLabelText(
-      'Crea tu pista para recordar tu contraseña (opcional)'
-    );
+    const trackInput = screen.getByLabelText(i18n.t('create_hint'));
 
     expect(passwordInput).toBeDefined();
     expect(confirmPasswordInput).toBeDefined();
@@ -41,22 +40,21 @@ describe('Password management form', () => {
   });
 
   test('Should render input error message and button disabled when the password is invalid.', () => {
-    const input = screen.getByLabelText('Crea tu contraseña Maestra');
+    const input = screen.getByLabelText(i18n.t('create_password'));
     fireEvent.change(input, { target: { value: 'abc' } });
     expect(input.value).toBe('abc');
     fireEvent.blur(input);
-    const error = screen.getByText('Debe tener entre 6 y 24 caracteres');
+    const error = screen.getByText(i18n.t('form_error_length'));
 
-    const button = screen.getByText('Siguiente');
+    const button = screen.getByText(i18n.t('continue_btn'));
     expect(button).toBeDisabled();
-
     expect(error).toBeDefined();
   });
 
   test('Should render continue button enable when password is valid', () => {
-    const passwordInput = screen.getByLabelText('Crea tu contraseña Maestra');
+    const passwordInput = screen.getByLabelText(i18n.t('create_password'));
     const confirmPasswordInput = screen.getByLabelText(
-      'Repite tu contraseña Maestra'
+      i18n.t('repeat_password')
     );
 
     fireEvent.change(passwordInput, { target: { value: 'Abcdef1' } });
@@ -65,7 +63,7 @@ describe('Password management form', () => {
     expect(confirmPasswordInput.value).toBe('Abcdef1');
     fireEvent.blur(confirmPasswordInput);
 
-    const button = screen.getByText('Siguiente');
+    const button = screen.getByText(i18n.t('continue_btn'));
     expect(button).not.toBeDisabled();
   });
 });

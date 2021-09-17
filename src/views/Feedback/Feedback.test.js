@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Router } from 'react-router-dom';
 import { wizardReducer } from '../../store';
 import Feedback from './Feedback';
+import i18n from '../../locale/i18n';
 
 const renderComponent = (reduxState) => {
   const store = createStore(wizardReducer, reduxState);
@@ -27,7 +28,7 @@ describe('Feedback success', () => {
   });
 
   test('Should render a successful text and icon when the request has been successful', () => {
-    const title = screen.getByText('¡Tu Password Manager ya está creado!');
+    const title = screen.getByText(i18n.t('feedback_success_title'));
     const icon = screen.getByAltText('success');
     expect(title).toBeDefined();
     expect(icon).toBeDefined();
@@ -40,7 +41,7 @@ describe('Feedback error', () => {
   });
 
   test('Should render an error text and icon when the request has failed', () => {
-    const title = screen.getByText('Ha habido un error');
+    const title = screen.getByText(i18n.t('feedback_error_title'));
     const icon = screen.getByAltText('error');
     expect(title).toBeDefined();
     expect(icon).toBeDefined();

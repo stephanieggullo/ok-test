@@ -8,8 +8,10 @@ import eyeIcon from '../../assets/img/eye-icon-private.svg';
 import eyeIconVisibility from '../../assets/img/eye-icon.svg';
 import ActionsBar from '../../components/actions-bar/ActionsBar';
 import { submitForm } from '../../services/api';
+import { useTranslation } from 'react-i18next';
 
 const Form = () => {
+  const { t } = useTranslation();
   const store = useSelector((state) => state.step);
   const step = store && store.step;
   const dispatch = useDispatch();
@@ -34,10 +36,18 @@ const Form = () => {
     setPasswordVisibility((prevValue) => !prevValue);
   };
 
-  const handlePasswordValidity = () => {
-    const value = passwordRef.current.value;
+  const onPasswordBlur = () => {
+    checkPasswordValue(passwordRef.current.value);
+  };
+
+  const onConfirmPasswordBlur = () => {
+    checkPasswordValue(confirmPasswordRef.current.value);
+  };
+
+  const checkPasswordValue = (value) => {
+    const password = passwordRef.current.value;
     if (!!value) {
-      setErrors(value);
+      validatePassword(password);
     } else {
       clearErrors();
       setDisabled(true);
@@ -52,19 +62,20 @@ const Form = () => {
     );
   };
 
-  const setErrors = (value) => {
+  const validatePassword = (value) => {
     const valueLength = passwordRef.current.value.trim().length;
     const upperCase = /[A-Z]/.test(value);
     const number = /[0-9]/.test(value);
     if (valueLength < 6 || valueLength > 24) {
-      setErrorPassword('Debe tener entre 6 y 24 caracteres');
+      setErrorPassword('form_error_length');
     } else if (!upperCase) {
-      setErrorPassword('Debe contener al menos una mayúscula');
+      setErrorPassword('form_error_capital_letter');
     } else if (!number) {
-      setErrorPassword('Debe contener al menos un número');
+      setErrorPassword('form_error_number');
     } else if (!matchPassword()) {
-      setErrorPasswordConfirm('No coincide con la contraseña');
+      setErrorPasswordConfirm('form_error_match');
       setErrorPassword(null);
+      setDisabled(true);
     } else {
       setDisabled(false);
       clearErrors();
@@ -72,8 +83,8 @@ const Form = () => {
   };
 
   const clearErrors = () => {
+    setErrorPassword(null);
     if (matchPassword()) {
-      setErrorPassword(null);
       setErrorPasswordConfirm(null);
     }
   };
@@ -124,19 +135,17 @@ const Form = () => {
   return (
     <Fragment>
       <section>
-        <h1 className='title-text'>Crea tu Password Manager</h1>
+        <h1 className='title-text'>{t('title')}</h1>
         <div className='title-border'></div>
         <p className={styles['instructions']}>
-          En primer lugar, debes crear una contraseña diferente para sus
-          pertenencias electrónicas. No podrás recuperar tu contraseña, así que
-          recuérdala bien.
+          {t('funcionality_description')}
         </p>
         <form>
           <fieldset className='form-fieldset'>
             <div className={styles['form-group']}>
               <div>
                 <label htmlFor='password' className={styles['form-label']}>
-                  Crea tu contraseña Maestra
+                  {t('create_password')}
                 </label>
                 <div className={styles['form-input_box']}>
                   <input
@@ -148,7 +157,7 @@ const Form = () => {
                     className={`${styles['form-input_input']} ${
                       styles['form-input_input-pwd']
                     } ${errorPassword ? styles['form-input_error'] : ''}`}
-                    onBlur={handlePasswordValidity}
+                    onBlur={onPasswordBlur}
                     onChange={passworSecurity}
                   />
                   <div className={styles['form-input_meter-box']}>
@@ -159,7 +168,7 @@ const Form = () => {
                   </div>
                   {errorPassword && (
                     <span className={styles['form-group_error']}>
-                      {errorPassword}
+                      {t(`${errorPassword}`)}
                     </span>
                   )}
                   <img
@@ -175,7 +184,7 @@ const Form = () => {
                   htmlFor='confirm-password'
                   className={styles['form-label']}
                 >
-                  Repite tu contraseña Maestra
+                  {t('repeat_password')}
                 </label>
                 <div className={styles['form-input_box']}>
                   <input
@@ -189,7 +198,7 @@ const Form = () => {
                     } ${
                       errorPasswordConfirm ? styles['form-input_error'] : ''
                     }`}
-                    onBlur={handlePasswordValidity}
+                    onBlur={onConfirmPasswordBlur}
                   />
                   <img
                     src={passwordVisibility ? eyeIconVisibility : eyeIcon}
@@ -199,23 +208,20 @@ const Form = () => {
                   />
                   {errorPasswordConfirm && (
                     <span className={styles['form-group_error']}>
-                      {errorPasswordConfirm}
+                      {t(`${errorPasswordConfirm}`)}
                     </span>
                   )}
                 </div>
               </div>
             </div>
             <div className={styles['instructions']}>
-              <p>
-                También puedes crear una pista que te ayude a recordar tu
-                contraseña maestra.
-              </p>
+              <p>{t('hint_description')}</p>
             </div>
             <div
               className={`${styles['form-group']} ${styles['form-group_textarea']}`}
             >
               <label htmlFor='track' className={styles['form-label']}>
-                Crea tu pista para recordar tu contraseña (opcional)
+                {t('create_hint')}
               </label>
               <input
                 type='text'

@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
 import styles from './ActionsBar.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const ActionsBar = (props) => {
   const feedbackType = props.type === 'feedback';
+  const { t } = useTranslation();
+
   const handleNextBtn = () => {
     props.onClickContinue();
   };
@@ -24,7 +27,7 @@ const ActionsBar = (props) => {
             className={`${styles.btn} ${styles['cancel-btn']}`}
             onClick={handleCancelBtn}
           >
-            Cancelar
+            {t('cancel_btn')}
           </button>
           <button
             disabled={props.disabled || props.loading}
@@ -33,7 +36,7 @@ const ActionsBar = (props) => {
           >
             {!props.loading && (
               <Fragment>
-                Siguiente
+                {t('continue_btn')}
                 <span className={styles['continue-btn_icon']}></span>
               </Fragment>
             )}
@@ -48,7 +51,7 @@ const ActionsBar = (props) => {
           className={`${styles.btn} ${styles['continue-btn']} ${styles['continue-btn-secondary']}`}
           onClick={handleNextBtn}
         >
-          {props.text}
+          {t(`${props.text}`)}
           <span
             className={`${styles['continue-btn_icon']} ${styles['continue-btn_icon-primary']}`}
           ></span>

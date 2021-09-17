@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Router } from 'react-router-dom';
 import { wizardReducer } from '../../store';
 import Instructions from './Instructions';
+import i18n from '../../locale/i18n';
 
 const renderComponent = (reduxState) => {
   const store = createStore(wizardReducer, reduxState);
@@ -27,10 +28,8 @@ describe('Instructions', () => {
   });
 
   test('Should render the functionality instructions', () => {
-    const subtitle = screen.getByText('Cómo funciona');
-    const text = screen.getByText(
-      'En primer lugar, debes crear una contraseña diferente para sus pertenencias electrónicas. No podrás recuperar tu contraseña, así que recuérdala bien.'
-    );
+    const subtitle = screen.getByText(i18n.t('funcionality_title'));
+    const text = screen.getByText(i18n.t('funcionality_description'));
     expect(subtitle).toBeDefined();
     expect(text).toBeDefined();
   });
@@ -49,7 +48,7 @@ describe('Instructions', () => {
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox.checked).toEqual(false);
 
-    const button = screen.getByText('Siguiente');
+    const button = screen.getByText(i18n.t('continue_btn'));
     expect(button).toBeDisabled();
   });
 
@@ -58,7 +57,7 @@ describe('Instructions', () => {
     fireEvent.click(checkbox);
     expect(checkbox.checked).toEqual(true);
 
-    const button = screen.getByText('Siguiente');
+    const button = screen.getByText(i18n.t('continue_btn'));
     expect(button).not.toBeDisabled();
   });
 });

@@ -9,13 +9,11 @@ const Feedback = () => {
   const history = useHistory();
   const feedback = store && store.feedback;
   const isSuccess = feedback === 'success';
-  const title = isSuccess
-    ? '¡Tu Password Manager ya está creado!'
-    : 'Ha habido un error';
+  const title = isSuccess ? 'feedback_success_title' : 'feedback_error_title';
   const textInfo = isSuccess
-    ? 'Se ha podido crear tu contraseña maestra con exito.'
-    : 'No hemos podido modificar tu Contraseña Maestra. Inténtalo más tarde.';
-  const btnText = isSuccess ? 'Acceder' : 'Volver a Password Manager';
+    ? 'feedback_success_description'
+    : 'feedback_error_description';
+  const btnText = isSuccess ? 'access_btn' : 'go_back_btn';
 
   useEffect(() => {
     if (!feedback) {
