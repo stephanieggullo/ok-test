@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Stepper from '../stepper/Stepper';
-import Instructions from '../../views/Instructions/Instructions';
+import Instructions from '../../views/instructions/Instructions';
 import Form from '../../views/Form/Form';
 
 const Wizard = () => {
